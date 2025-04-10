@@ -55,9 +55,9 @@ public class MemberController {
 
     @GetMapping("list")
     public ResponseEntity list_2(
-            @RequestParam( defaultValue = "0") int start){
-        log.info("ctrl start : {}", start);
-        List<MemberDTO> list = ms.getList();
+            @RequestParam( defaultValue = "0") int start ,
+            @RequestParam( defaultValue = "3") int page){
+        List<MemberDTO> list = ms.getListPage( start , page );
         return ResponseEntity.ok().body( list );
     }
 }

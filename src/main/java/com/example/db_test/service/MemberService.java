@@ -5,6 +5,10 @@ import com.example.db_test.dto.MemberDTO;
 import com.example.db_test.repo.MemberRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -72,6 +76,17 @@ public class MemberService {
             return 1;
         }
         return 0;
+    }
+    public List<MemberDTO> getListPage( int start, int page ){
+        //int page = 3;
+        Pageable pageable = PageRequest.of( start, page,
+                                Sort.by(Sort.Order.desc("number")) );
+        Page<MemberEntity> pageEntity = repo.findAll( pageable );
+        List<MemberEntity> listE = pageEntity.getContent();
+        List<MemberDTO> list = listE.stream()
+                                    .map( m -> new MemberDTO(m))
+                                    .toList();
+        return list;
     }
 }
 
