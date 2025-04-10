@@ -88,6 +88,25 @@ public class MemberService {
                                     .toList();
         return list;
     }
+    public MemberDTO getContent(long number){
+        MemberEntity entity = repo.findByContent(number);
+        log.info("entity : {}", entity);
+        if( entity != null )
+            return new MemberDTO( entity );
+        return null;
+    }
+    public int insertContent(MemberDTO dto){
+        int result = 0;
+        try {//insert, update
+            result = repo.insertContent( dto.getUserId(),
+                                        dto.getUserName(),
+                                        dto.getAge() );
+            log.info("service result : {}",result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
 
 

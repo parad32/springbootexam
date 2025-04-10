@@ -60,6 +60,22 @@ public class MemberController {
         List<MemberDTO> list = ms.getListPage( start , page );
         return ResponseEntity.ok().body( list );
     }
+
+    @GetMapping("/api/content/{number}")
+    public ResponseEntity getContent(@PathVariable("number") long number){
+        MemberDTO dto = ms.getContent(number);
+        if( dto != null)
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    @PostMapping("api/content")
+    public ResponseEntity insertContent(@RequestBody MemberDTO dto){
+        log.info("ctrl dto : {}",dto);
+        int result = ms.insertContent(dto);
+        if(result == 1)
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }
 }
 
 
