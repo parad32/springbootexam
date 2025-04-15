@@ -60,9 +60,9 @@ public class MemberController {
     }
 
     /**
-     * 요구사항 5-3: 회원 아이디로 회원 정보 조회
+     * 요구사항 5-3: 회원 정보 조회
      * - Postman에서 사용 예시:
-     *   GET http://localhost:8080/members/{userId}
+     *   GET http://localhost:8080/members/{number}
      */
     @GetMapping("/members/{number}")
     public ResponseEntity getData(@PathVariable("number") long number){
@@ -120,7 +120,7 @@ public class MemberController {
      *     "password": "1234"
      *   }
      */
-    @PostMapping("/login")
+    @PostMapping("/members/login")
     public ResponseEntity login(@RequestBody MemberDTO dto) {
         MemberDTO result = ms.login(dto);
         if (result != null) {
@@ -142,16 +142,6 @@ public class MemberController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("조회할 회원이 없습니다.");
-    }
-
-    @GetMapping("/api/content/{number}")
-    public ResponseEntity getContent(@PathVariable("number") long number){
-        MemberDTO dto = ms.getContent(number);
-        if( dto != null)
-            return ResponseEntity.ok()
-                    .body("회원 상세 정보 조회 성공\n" + dto);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("해당 회원을 찾을 수 없습니다.");
     }
 
 }
